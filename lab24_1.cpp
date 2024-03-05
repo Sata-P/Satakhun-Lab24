@@ -63,4 +63,54 @@ void List::append(int d){
 	size++;
 }
 
-//Write List::remove() here
+void List::remove(int position){
+	if(position >= size){
+		return;
+	}
+	if(position == 0){
+		Node *temp = root->next;
+		delete root;
+		root = temp;
+		return;
+	}
+	Node *current = root;
+	int currPos = 0;
+	while(current->next != NULL && currPos < position-1){
+		current = current->next;
+		currPos++;
+	}
+
+	Node *temp = current->next;
+	current->next = current->next->next;
+	delete temp;
+	return;
+}
+
+
+int main(){
+
+	List myList = {NULL,0};
+
+	int n;
+	cin >> n;
+	cout << n << endl;
+	for(int i = 0 ; i < n; ++i){
+		cout << endl << i << endl;
+		int toAppend = 0;
+		cin >> toAppend;
+		myList.append(toAppend);
+		cout << "Appended" << endl;
+		myList.show();
+	}
+
+	for(int i = 0 ; i < n-1; ++i){
+		cout << endl << i << endl;
+		int posToRemove = 0;
+		cin >> posToRemove;
+		myList.remove(posToRemove);
+		cout << "Removed" << endl;
+		myList.show();
+	}
+
+	return 0;
+}
